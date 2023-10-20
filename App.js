@@ -1,14 +1,42 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import * as React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+import {View, Text, StyleSheet} from 'react-native';
+import NewToCity from './Components/Welcome/NewToCity';
+
+const Stack = createNativeStackNavigator();
+
+function App() {
+  _retrieveData = async () => {
+    try {
+      const value = await AsyncStorage.getItem('TASKS');
+      if (value !== null) {
+        // We have data!!
+        if (temp){
+          return (
+            <View  style={styles.container}>
+              <NewToCity />
+            </View>
+          );
+          }
+          else{
+            return(
+              <View>
+                <Text>hello</Text>
+              </View>
+        
+            );
+          }
+      }
+    } catch (error) {
+      // Error retrieving data
+    }
+  };
+
 }
+
+export default App;
 
 const styles = StyleSheet.create({
   container: {
