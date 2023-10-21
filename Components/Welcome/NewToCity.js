@@ -1,9 +1,12 @@
 import React, {useState} from 'react';
-import { StatusBar } from 'expo-status-bar';
+import storage from '../Storage';
 import { Text, Image, View, Button, Pressable } from 'react-native';
 import Styles from "./Styles"
+import { NavigationProp, ParamListBase} from '@react-navigation/native';
 
-export default function NewToCity() {
+
+
+export default function NewToCity({navigation}) {
   const [screen, setScreen] = useState(1);
   if (screen == 1){
   return (
@@ -46,22 +49,21 @@ else{
 
     <Image style={Styles.ProgressBar} source={require("../../Images/ProgressBar3.jpg")} />
 
+<Link >
     <Pressable style = {Styles.NextButton} onPress={()=>{
-      _storeData = async () => {
-        try {
-          await AsyncStorage.setItem(
-            '@MySuperStore:key',
-            'I like to save it.',
-          );
-        } catch (error) {
-          // Error saving data
-        }
-      };
+      storage.save({
+        key: 'loginState',
+        id: '1001',
+        data: "1",
+        expires: null
+      });      
     }}>
     <Text style={Styles.NextText}>Get Started</Text>
     </Pressable>
+    </Link>
 
   </View>
     );
 }
 }
+
