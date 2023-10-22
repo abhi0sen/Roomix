@@ -6,10 +6,14 @@ import {View, Text, StyleSheet} from 'react-native';
 import NewToCity from './Components/Welcome/NewToCity';
 import storage from './Components/Storage';
 import Login from './Components/UserOnboard/Login';
+import Register from './Components/UserOnboard/Register';
+import IsRoommate from './Components/RoommatePost/IsRoommate';
+import Home from './Components/Home/Home';
+import RoomDetails from './Components/RoommatePost/RoomDetails';
 
 const Stack = createNativeStackNavigator();
 
-function App(): JSX.Element {
+function App(){
 
   return (
     // <View style = {styles.container}> 
@@ -17,18 +21,18 @@ function App(): JSX.Element {
     // </View>
 
     
-    <NavigationContainer>
-    <View  style={styles.container}>
+    <NavigationContainer style={styles.container}>
+    {/* <View  style={styles.container}> */}
     <Stack.Navigator
-      screenOptions={{
-        headerStyle: {
-          backgroundColor: "#000000",
-        },
-        headerTintColor:"#ffffff",
-        headerTitleStyle: {
-          fontWeight: "bold",
-        }
-      }}
+      // screenOptions={{
+      //   headerStyle: {
+      //     backgroundColor: "#000000",
+      //   },
+      //   headerTintColor:"#ffffff",
+      //   headerTitleStyle: {
+      //     fontWeight: "bold",
+      //   }
+      // }}
       >
 
   <Stack.Screen
@@ -41,8 +45,31 @@ function App(): JSX.Element {
         component= {Login}
         />
 
+        <Stack.Screen
+        name='Register'
+        component= {Register}
+        />
+
+        <Stack.Screen
+        name='isRoommate'
+        component= {IsRoommate}
+        options={{title:"Roommate Post"}}
+        />
+        
+        <Stack.Screen
+        name='RoomDetails'
+        component= {RoomDetails}
+        options={{title:"Roommate Post"}}
+        />
+        
+        <Stack.Screen
+        name='Home'
+        component= {Home}
+        options={{title: "Roomix"}}
+        />
+
         </Stack.Navigator>
-    </View>
+    {/* </View> */}
     </NavigationContainer>
   );
 

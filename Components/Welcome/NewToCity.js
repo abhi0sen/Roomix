@@ -2,7 +2,6 @@ import React, {useState} from 'react';
 import storage from '../Storage';
 import { Text, Image, View, Button, Pressable } from 'react-native';
 import Styles from "./Styles"
-import { NavigationProp, ParamListBase} from '@react-navigation/native';
 
 
 
@@ -49,18 +48,17 @@ else{
 
     <Image style={Styles.ProgressBar} source={require("../../Images/ProgressBar3.jpg")} />
 
-<Link >
     <Pressable style = {Styles.NextButton} onPress={()=>{
       storage.save({
         key: 'loginState',
         id: '1001',
         data: "1",
         expires: null
-      });      
+      });    
+      navigation.navigate('Login')
     }}>
     <Text style={Styles.NextText}>Get Started</Text>
     </Pressable>
-    </Link>
 
   </View>
     );

@@ -5,6 +5,8 @@ const Styles = StyleSheet.create({
   Container:{
     alignItems: 'center',
       justifyContent: 'center',
+      backgroundColor: "#ffffff",
+      height: "100%"
   },
     NextButton: {
         paddingVertical: 15,

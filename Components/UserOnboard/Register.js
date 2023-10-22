@@ -1,10 +1,9 @@
 import React from 'react'
-import { View, Text, Image, TextInput, StyleSheet, Pressable } from "react-native"
+import { View, Text, Image, TextInput, StyleSheet, Pressable } from 'react-native'
 
-
-const Login = ({navigation}) => {
+const Register = ({navigation}) => {
   return (
-    <View style={styles.Container}>
+        <View style={styles.Container}>
       <Image source={require("../../Images/UserOnboard/login.jpg")} />
       <TextInput
       placeholder='Username'
@@ -14,33 +13,42 @@ const Login = ({navigation}) => {
       placeholder='Password'
       style={styles.Textinput}
       />
+      <TextInput
+      placeholder='Mobile Number'
+      style={styles.Textinput}
+      />
         <View style={styles.DFlex}>
             <View style={styles.Label}>
       <Text  style={styles.Label}>
-        Not a Roomix Member? <Text style={styles.Register}  onPress={() => {
-                navigation.navigate("Register")
-            }}>Register</Text>
+        Already a Roomix? <Text style={styles.Register}  onPress={() => {
+                navigation.navigate("Login")
+            }}>Sign In</Text>
       </Text>
       </View>
 
       <View>
-            <Pressable style={styles.SignIn}>
-                <Text style={styles.SignInText}>Sign In</Text>
+            <Pressable style={styles.SignIn} onPress={() => {
+                navigation.navigate("isRoommate")
+            }} >
+                <Text style={styles.SignInText}>Register</Text>
             </Pressable>
       </View>
       </View>
-
       </View>
   )
 }
+
+export default Register
+
 
 const styles = StyleSheet.create({
     Container: {
         alignItems: 'center',
         backgroundColor: "#ffffff",
         height: "100%",
-        paddingTop: 20
+        // paddingTop: 20,
     },
+
     Textinput:{
         borderBottomWidth: 1,
         borderBottomColor: "#B7B7B7",
@@ -57,7 +65,8 @@ const styles = StyleSheet.create({
         borderRadius: 50,
         margin: "auto",
         fontSize: 20,
-        width: 80
+        width: 100,
+        paddingHorizontal: 15
     },
     SignInText:{
         textAlign: "center",
@@ -65,7 +74,7 @@ const styles = StyleSheet.create({
     },
     Label: {
         alignSelf: 'center',
-        marginEnd: 11
+        marginEnd: 24
     },
     DFlex: {
         display: 'flex',
@@ -75,4 +84,3 @@ const styles = StyleSheet.create({
     }
 })
 
-export default Login
