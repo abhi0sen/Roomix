@@ -10,19 +10,15 @@ import Register from './Components/UserOnboard/Register';
 import IsRoommate from './Components/RoommatePost/IsRoommate';
 import Home from './Components/Home/Home';
 import RoomDetails from './Components/RoommatePost/RoomDetails';
+import RoomView from './Components/Home/RoomView';
+import RoomPreference from './Components/RoommatePost/RoomPreference';
 
 const Stack = createNativeStackNavigator();
 
 function App(){
 
-  return (
-    // <View style = {styles.container}> 
-    //   <NewToCity />
-    // </View>
-
-    
+  return (    
     <NavigationContainer style={styles.container}>
-    {/* <View  style={styles.container}> */}
     <Stack.Navigator
       // screenOptions={{
       //   headerStyle: {
@@ -65,25 +61,25 @@ function App(){
         <Stack.Screen
         name='Home'
         component= {Home}
+        options={{title: "Roomix", gestureEnabled: false, headerLeft: () => null, headerBackVisible: false }}
+        />
+        
+        <Stack.Screen
+        name='RoomView'
+        component= {RoomView}
+        options={{title: "Roomix"}}
+        />
+        
+        <Stack.Screen
+        name='RoomPreference'
+        component= {RoomPreference}
         options={{title: "Roomix"}}
         />
 
         </Stack.Navigator>
-    {/* </View> */}
+
     </NavigationContainer>
   );
-
-  // storage.load({
-  //   key: "loginState",
-  //   autoSync:true,
-  //   syncInBackground: true,
-  // })
-  // .then(ret => {
-  //   console.log(ret.userId);
-  // })
-  // .catch(err => {
-    
-  // })  
   
 }
 

@@ -1,15 +1,15 @@
 import React from "react";
-import { View, StyleSheet, TextInput, ScrollView } from "react-native";
+import { View, StyleSheet, TextInput, ScrollView, Pressable } from "react-native";
 import { AntDesign, EvilIcons } from "@expo/vector-icons";
 import RoomCard from "./RoomCard";
 
-const Home = () => {
+const Home = ({navigation}) => {
   return (
     <ScrollView>
       <View style={styles.Container}>
         <View style={styles.TopBar}>
           <View style={styles.SearchBar}>
-            <EvilIcons name="search" size={24} color="#c3c2c2" />
+            <EvilIcons style={styles.SearchIcon} name="search" size={27} color="#c3c2c2" />
             <TextInput placeholder="Search" />
           </View>
 
@@ -18,9 +18,10 @@ const Home = () => {
           </View>
         </View>
 
-        <RoomCard />
-        <RoomCard />
-        <RoomCard />
+        <RoomCard navigation={navigation} />
+        <RoomCard navigation={navigation} />
+        <RoomCard navigation={navigation} />
+        <RoomCard navigation={navigation} />
       </View>
     </ScrollView>
   );
@@ -33,6 +34,9 @@ const styles = StyleSheet.create({
     backgroundColor: "#ffffff",
     height: "100%",
     paddingHorizontal: 20,
+  },
+  SearchIcon: {
+    alignSelf: 'center'
   },
   SearchBar: {
     borderWidth: 1,

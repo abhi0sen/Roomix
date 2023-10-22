@@ -2,12 +2,12 @@ import React from 'react'
 import { View, Text, StyleSheet, TextInput, Image, Pressable} from 'react-native'
 import Room from '../../Images/Room.jpg'
 
-const RoomDetails = () => {
+const RoomView = () => {
   return (
     <View>
-      
+      <Text>Room View</Text>
     </View>
   )
 }
 
-export default RoomDetails
+export default RoomView

@@ -2,13 +2,15 @@ import React, {useState} from 'react'
 import { View, Text, StyleSheet, TextInput, Image, Pressable} from 'react-native'
 import Room from '../../Images/Room.jpg'
 
-const RoomCard = () => {
+const RoomCard = ({navigation}) => {
   const [fvt, setFvt] = useState(true)
   const toogleFvt = () => {
     setFvt(!fvt);
   }
   return (
-    <Pressable >
+    <Pressable onPress={() => {
+      navigation.navigate('RoomView');
+    }}>
       <View style={styles.Room}>
         <Image
         source={Room}
