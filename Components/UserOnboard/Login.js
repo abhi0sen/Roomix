@@ -24,7 +24,9 @@ const Login = ({navigation}) => {
       </View>
 
       <View>
-            <Pressable style={styles.SignIn}>
+            <Pressable style={styles.SignIn} onPress={()=> {
+                navigation.navigate("Home")
+            }}>
                 <Text style={styles.SignInText}>Sign In</Text>
             </Pressable>
       </View>

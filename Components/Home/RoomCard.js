@@ -1,6 +1,7 @@
 import React, {useState} from 'react'
 import { View, Text, StyleSheet, TextInput, Image, Pressable} from 'react-native'
 import Room from '../../Images/Room.jpg'
+import styles from './RoomStyle' 
 
 const RoomCard = ({navigation}) => {
   const [fvt, setFvt] = useState(true)
@@ -39,32 +40,3 @@ const RoomCard = ({navigation}) => {
 }
 
 export default RoomCard
-
-const styles = StyleSheet.create({
-  Room: {
-    marginTop: 15,
-    borderRadius: 10,
-    overflow: 'hidden',
-    backgroundColor: '#fff',
-    borderWidth: 0.5,
-    shadowColor: '#171717',
-    shadowOffset: {width: -2, height: 4},
-    shadowOpacity: 0.2,
-    shadowRadius: 3,
-  },
-  RoomImg:{
-    width: "100%",
-    objectFit: 'cover'
-  },
-  RoomDetails:{
-    padding: 10
-  },
-  LocPrice: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  Title: {
-    fontSize: 20,
-    fontWeight: 'bold'
-  }
-})

@@ -2,6 +2,7 @@ import React from "react";
 import { View, StyleSheet, TextInput, ScrollView, Pressable } from "react-native";
 import { AntDesign, EvilIcons } from "@expo/vector-icons";
 import RoomCard from "./RoomCard";
+import styles from "./RoomStyle";
 
 const Home = ({navigation}) => {
   return (
@@ -28,33 +29,3 @@ const Home = ({navigation}) => {
 };
 
 export default Home;
-
-const styles = StyleSheet.create({
-  Container: {
-    backgroundColor: "#ffffff",
-    height: "100%",
-    paddingHorizontal: 20,
-  },
-  SearchIcon: {
-    alignSelf: 'center'
-  },
-  SearchBar: {
-    borderWidth: 1,
-    flexDirection: "row",
-    borderRadius: 20,
-    padding: 5,
-    width: "90%",
-    borderColor: "#A5A3A3",
-  },
-  TopBar: {
-    marginTop: 10,
-    flexDirection: "row",
-    alignSelf: "center",
-    justifyContent: "center",
-    // padding: 5
-  },
-  Filter: {
-    alignSelf: "center",
-    marginLeft: 5,
-  },
-});

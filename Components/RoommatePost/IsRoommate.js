@@ -4,7 +4,7 @@ import { View, Text, StyleSheet, Pressable } from 'react-native'
 const IsRoommate = ({navigation}) => {
   return (
     <View style={styles.Container}>
-      <Text style={styles.Question}>Are You a Roommate</Text>
+      <Text style={styles.Question}>What do you want?</Text>
       <View style={styles.DFlex}>
 
       <Pressable style={styles.Input} onPress={() => {
