@@ -17,6 +17,10 @@ import Wishlist from './Components/Home/Wishlist';
 import ChatList from './Components/Chatting/ChatList';
 import UserProfile from './Components/Profile/UserProfile';
 
+// Icons
+
+import { Ionicons, FontAwesome, AntDesign } from '@expo/vector-icons';
+
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
@@ -98,11 +102,21 @@ export default App;
 function TabNavigator() {
   return (
     <Tab.Navigator>
-      <Tab.Screen name="Home" component={Home} options={{headerShown: false}} />
-      <Tab.Screen name="Wishlist" component={Wishlist} options={{headerShown: false}} />
-      <Tab.Screen name="AddPost" component={IsRoommate} options={{headerShown: false}} />
-      <Tab.Screen name="ChatList" component={ChatList} options={{headerShown: false}} />
-      <Tab.Screen name="UserProfile" component={UserProfile} options={{headerShown: false}} />
+      <Tab.Screen name="Home" component={Home} options={{headerShown: false, tabBarIcon: ({ color, size }) => (
+            <Ionicons name="home-outline" size={24} color="black" />
+          ),}} />
+      <Tab.Screen name="Wishlist" component={Wishlist} options={{headerShown: false, tabBarIcon: ({ color, size }) => (
+            <FontAwesome name="heart-o" size={24} color="black" />
+          ),}} />
+      <Tab.Screen name="AddPost" component={IsRoommate} options={{headerShown: false, tabBarIcon: ({ color, size }) => (
+            <Ionicons name="add-circle-outline" size={24} color="black" />
+          ),}} />
+      <Tab.Screen name="ChatList" component={ChatList} options={{headerShown: false, tabBarIcon: ({ color, size }) => (
+            <Ionicons name="chatbubbles-outline" size={24} color="black" />
+          ),}} />
+      <Tab.Screen name="UserProfile" component={UserProfile} options={{headerShown: false, tabBarIcon: ({ color, size }) => (
+            <AntDesign name="user" size={24} color="black" />
+          ),}} />
     </Tab.Navigator>
   );
 }

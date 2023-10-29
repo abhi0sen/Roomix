@@ -1,21 +1,31 @@
-import React from 'react'
-import { View, Text, Image, TextInput, StyleSheet, Pressable } from 'react-native'
+import React, { useState } from 'react'
+import { View, Text, Image, TextInput, StyleSheet, Pressable, ScrollView } from 'react-native'
+import styles from './Styles'
+import { Registration } from '../../Database/Firestore'
+
 
 const Register = ({navigation}) => {
+    const [username, setUsername] = useState('')
+    const [password, setPassword] = useState('')
+    const [mobile, setMobile] = useState('')
   return (
+    // <ScrollView>
         <View style={styles.Container}>
       <Image source={require("../../Images/UserOnboard/login.jpg")} />
       <TextInput
       placeholder='Username'
       style={styles.Textinput}
+      onChangeText={setUsername}
       />
       <TextInput
       placeholder='Password'
       style={styles.Textinput}
+        onChangeText={setPassword}
       />
       <TextInput
       placeholder='Mobile Number'
       style={styles.Textinput}
+      onChangeText={setMobile}
       />
         <View style={styles.DFlex}>
             <View style={styles.Label}>
@@ -28,59 +38,17 @@ const Register = ({navigation}) => {
 
       <View>
             <Pressable style={styles.SignIn} onPress={() => {
+                // Registration(username, password, mobile)
                 navigation.navigate("isRoommate")
+                console.log(username, password, mobile)
             }} >
                 <Text style={styles.SignInText}>Register</Text>
             </Pressable>
       </View>
       </View>
+      {/* </ScrollView> */}
       </View>
   )
 }
 
 export default Register
-
-
-const styles = StyleSheet.create({
-    Container: {
-        alignItems: 'center',
-        backgroundColor: "#ffffff",
-        height: "100%",
-        // paddingTop: 20,
-    },
-
-    Textinput:{
-        borderBottomWidth: 1,
-        borderBottomColor: "#B7B7B7",
-        width: "80%",
-        padding: 5,
-        marginBottom: 20
-    },
-    Register: {
-        color: "#0084CE"
-    },
-    SignIn: {
-        backgroundColor: '#FFBA1B',
-        padding: 10,
-        borderRadius: 50,
-        margin: "auto",
-        fontSize: 20,
-        width: 100,
-        paddingHorizontal: 15
-    },
-    SignInText:{
-        textAlign: "center",
-        fontSize: 15,
-    },
-    Label: {
-        alignSelf: 'center',
-        marginEnd: 24
-    },
-    DFlex: {
-        display: 'flex',
-        flexDirection: 'row',
-        alignSelf: 'center',
-        marginTop: 10
-    }
-})
-

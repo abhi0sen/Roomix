@@ -101,6 +101,22 @@ const styles = StyleSheet.create({
     Optional:{
       color:"#9B9B9B"
     },
+    Img: {
+      width: 65, 
+      height: 65,
+      marginRight: 10,
+      resizeMode: "cover",
+      borderRadius: 10
+    },
+    CloseBtn:{
+      position: 'absolute',
+      top: 2,
+      right: 10
+    },
+    Active: {
+      borderColor: "#f9a825",
+      borderWidth: 2,
+    }
     });
   
 export default styles

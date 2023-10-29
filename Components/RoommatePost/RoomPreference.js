@@ -10,11 +10,17 @@ import {
 } from "react-native";
 import { RangeSlider } from "@react-native-assets/slider";
 import styles from "./style";
+import { RoomPreferred } from '../../Database/Firestore'
 
 const RoomPreference = ({ navigation }) => {
   const [value, setValue] = React.useState(0);
   const [range, setRange] = React.useState([0, 0]);
   const [max, setMax] = React.useState(1);
+  const [Gender, setGender] = useState("")
+  const [Meal, setMeal] = useState("")
+  const [OtherCriteria, setOtherCriteria] = useState("")
+
+
   React.useEffect(() => {
     setInterval(() => setMax((max) => max + 1), 2000);
   }, []);
@@ -26,23 +32,23 @@ const RoomPreference = ({ navigation }) => {
       <Text style={styles.Label}>Gender</Text>
 
       <View style={styles.Gender}>
-        <Pressable style={styles.GenderBtn}>
+        <Pressable style={(Gender=="Male")?[styles.GenderBtn, styles.Active]: styles.GenderBtn} onPress={()=>{setGender("Male")}}>
           <Text style={styles.GenText}>Male</Text>
         </Pressable>
-        <Pressable style={styles.GenderBtn}>
+        <Pressable style={(Gender=="Female")?[styles.GenderBtn, styles.Active]: styles.GenderBtn} onPress={() => {setGender("Female")}}>
           <Text style={styles.GenText}>Female</Text>
         </Pressable>
-        <Pressable style={styles.GenderBtn}>
+        <Pressable style={(Gender=="Others")?[styles.GenderBtn, styles.Active]: styles.GenderBtn} onPress={() => {setGender("Others")}}>
           <Text style={styles.GenText}>Others</Text>
         </Pressable>
       </View>
 
       <Text style={styles.Label}>Preferred Diet</Text>
       <View style={styles.Gender}>
-        <Pressable style={styles.GenderBtn}>
+        <Pressable  style={(Meal=="Vegetarian")?[styles.GenderBtn, styles.Active]: styles.GenderBtn} onPress={() => {setMeal("Vegetarian")}}>
           <Text style={styles.GenText}>Vegetarian</Text>
         </Pressable>
-        <Pressable style={styles.GenderBtn}>
+        <Pressable  style={(Meal=="Non-Vegetarian")?[styles.GenderBtn, styles.Active]: styles.GenderBtn} onPress={() => {setMeal("Non-Vegetarian")}}>
           <Text style={styles.GenText}>Non-Vegetarian</Text>
         </Pressable>
       </View>
@@ -66,14 +72,13 @@ const RoomPreference = ({ navigation }) => {
         vertical={false}
   inverted={false} 
         enabled={true}
-        trackHeight={4}
-        thumbSize={15}
+        trackHeight={3}
+        thumbSize={13}
         thumbImage={undefined}
         slideOnTap={true} 
         onValueChange={setValue}
         onSlidingStart={undefined} 
         onSlidingComplete={undefined} 
-        // value={value}
       />
 
       <View style={styles.AgeGrp}>
@@ -87,6 +92,7 @@ const RoomPreference = ({ navigation }) => {
       <TextInput
         style={styles.Input}
         placeholder="e.g. Non-Drinker / Non-Smoker"
+        onChangeText={setOtherCriteria}
       />
 
       <View style={styles.alignEnd}>
@@ -95,6 +101,7 @@ const RoomPreference = ({ navigation }) => {
           onPress={() => {
             alert("Your Request is Sent for Verification!!");
             navigation.navigate("Home");
+            // RoomPreferred(Gender, Meal, value, OtherCriteria)
           }}
         >
           <Text style={styles.SaveTxt}>Send Request</Text>
