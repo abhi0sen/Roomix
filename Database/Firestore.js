@@ -2,9 +2,10 @@ import firebase from 'firebase/compat/app';
 import { getDatabase} from 'firebase/database'
 import "firebase/firestore";
 import { initializeApp } from "firebase/app";
-import { getFirestore, getDoc} from "firebase/firestore";
-import { collection, addDoc, doc, setDoc, updateDoc } from "firebase/firestore"; 
+import { getFirestore} from "firebase/firestore";
+import { collection, addDoc, doc, updateDoc, query, where, getDocs } from "firebase/firestore"; 
 import { getStorage } from "firebase/storage";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 const config = {
@@ -21,17 +22,47 @@ const config = {
 
 const app = initializeApp(config);
 
-const db = getFirestore(app, {
-  experimentalForceLongPolling: true,
-  useFetchStreams: false,
-});
+const db = getFirestore(app);
 const storage = getStorage(app);
+
+const setUserId = async(userId) => {
+    await AsyncStorage.setItem("userId", userId)
+}
+
+const getUserId = async() => {
+    const userId = await AsyncStorage.getItem("userId")
+}
 
 const Registration = async (username, password, mobile) => {
 
-  db.collection("Rooms").doc(user).collection("Rooms").doc(user).update({
-    firstName: "firstName",
+try {
+    const docRef = await addDoc(collection(db, "users"), {
+      username: `${username}`,
+      password: `${password}`,
+      mobile: `${mobile}`
+    });
+    console.log("Document written with ID: ", docRef.id);
+    setUserId(docRef.id)
+  } catch (e) {
+    console.error("Error adding document: ", e);
+  }
+
+}
+
+const Loggedin = async(username, password, navigation) => {
+  
+  const q = query(collection(db, "users"), where("username", "==", `${username}`), where("password", "==", `${password}`))
+  
+const querySnapshot = await getDocs(q);
+
+  querySnapshot.forEach((doc) => {
+    // doc.data() is never undefined for query doc snapshots
+    setUserId(doc.id)
+    console.log(doc.id, " => ", doc.data());
+    navigation.navigate("Home")
+    return true;
   });
+  return false;
 
 }
 
@@ -55,24 +86,34 @@ const RoomPost = async (FlatSize, RoommateCount, TotalRent, AddressL1, SelectedS
 }
 
 const RoomPreferred = async (Gender, Diet, ageGroup, OtherCriteria) => {
-  const collectionRef = collection(db, "Rooms");
-const docRef = doc(collectionRef, "a6mWEwyzQjKDFnkA75uY");
-
-if (!(await getDoc(docRef)).exists()) {
-  // Create the document with initial fields
-  await setDoc(docRef, { field1: "value1", field2: "value2" });
+  try {
+    console.log(Gender, Diet, ageGroup, OtherCriteria)
+    const docRef = doc(db, "Rooms", "a6mWEwyzQjKDFnkA75uY");
+    
+    await updateDoc(docRef, {
+      Preference: {
+        Gender: `${Gender}`,
+        Diet: `${Diet}`,
+        AgeGroup: `${ageGroup}`,
+        OtherCriteria: `${OtherCriteria}`
+      }
+    });
+    console.log(Gender, Diet, ageGroup, OtherCriteria)
+    // console.log("Document updated with ID: ", docRef.id);
+  } catch (e) {
+    console.error("Error updating document: ", e);
+  }
 }
 
-try {
-  await updateDoc(docRef, {
-    newField1: "newValue1",
-    newField2: "newValue2",
-    // Add as many fields as needed
+const ViewRooms = async () => {
+  const querySnapshot = await getDocs(collection(db, "Rooms"));
+  data = []
+  querySnapshot.forEach((doc) => {
+    // doc.data() is never undefined for query doc snapshots
+    // console.log(doc.id, " => ", doc.data());
+    data.push({ id: doc.id, ...doc.data() })
   });
-  console.log("Document updated successfully");
-} catch (error) {
-  console.error("Error updating document: ", error);
-}
+  return data
 }
 
-export {Registration, RoomPost, storage, RoomPreferred};
+export {Registration, RoomPost, storage, RoomPreferred, Loggedin, ViewRooms};

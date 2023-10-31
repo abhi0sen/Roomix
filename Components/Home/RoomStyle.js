@@ -17,6 +17,7 @@ const RoomStyle = StyleSheet.create({
         padding: 5,
         width: "90%",
         borderColor: "#A5A3A3",
+        overflow: 'hidden',
       },
       TopBar: {
         marginTop: 10,
@@ -34,14 +35,18 @@ const RoomStyle = StyleSheet.create({
       borderRadius: 10,
       overflow: 'hidden',
       backgroundColor: '#fff',
-      borderWidth: 0.5,
-      shadowColor: '#171717',
-      shadowOffset: {width: -2, height: 4},
-      shadowOpacity: 0.2,
-      shadowRadius: 3,
+      elevation: 2,
+      borderWidth: 0.8,
+      borderColor: '#D9DDDC',
+      // shadowColor: '#D9DDDC',
+      // shadowOffset: {width: -2, height: 4},
+      // shadowOpacity: 0.2,
+      // shadowRadius: 3,
     },
     RoomImg:{
+      // width: "100%",
       width: "100%",
+      height: 220,
       objectFit: 'cover'
     },
     RoomDetails:{
@@ -87,7 +92,7 @@ const RoomStyle = StyleSheet.create({
       borderColor: 'black',
       position: 'absolute',
       right: 20,
-      bottom: 80,
+      bottom: 10,
       backgroundColor: '#fff',
       width: 55
     },

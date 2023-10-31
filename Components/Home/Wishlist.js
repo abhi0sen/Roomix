@@ -2,10 +2,10 @@ import React from 'react'
 import { View, Text } from 'react-native'
 import RoomCard from './RoomCard'
 
-const Wishlist = () => {
+const Wishlist = ({navigation}) => {
   return (
     <View>
-      <RoomCard />
+      <RoomCard navigation={navigation} />
     </View>
   )
 }

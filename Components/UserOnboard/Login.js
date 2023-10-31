@@ -1,18 +1,22 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { View, Text, Image, TextInput, StyleSheet, Pressable } from "react-native"
-
+import {Loggedin} from "../../Database/Firestore"
 
 const Login = ({navigation}) => {
+    const [username, setUsername] = useState();
+    const [password, setPassword] = useState();
   return (
     <View style={styles.Container}>
       <Image source={require("../../Images/UserOnboard/login.jpg")} />
       <TextInput
       placeholder='Username'
       style={styles.Textinput}
+      onChangeText={setUsername}
       />
       <TextInput
       placeholder='Password'
       style={styles.Textinput}
+      onChangeText={setPassword}
       />
         <View style={styles.DFlex}>
             <View style={styles.Label}>
@@ -25,6 +29,7 @@ const Login = ({navigation}) => {
 
       <View>
             <Pressable style={styles.SignIn} onPress={()=> {
+                // Loggedin(username, password, navigation)
                 navigation.navigate("Home")
             }}>
                 <Text style={styles.SignInText}>Sign In</Text>

@@ -20,6 +20,7 @@ import UserProfile from './Components/Profile/UserProfile';
 // Icons
 
 import { Ionicons, FontAwesome, AntDesign } from '@expo/vector-icons';
+import ChatLayout from './Components/Chatting/ChatLayout';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -81,12 +82,18 @@ function App(){
         <Stack.Screen
         name='RoomView'
         component= {RoomView}
-        options={{title: "Roomix"}}
+        options={{title: "Roomix"}} item 
         />
         
         <Stack.Screen
         name='RoomPreference'
         component= {RoomPreference}
+        options={{title: "Roomix"}}
+        />
+        
+        <Stack.Screen
+        name='ChatLayout'
+        component= {ChatLayout}
         options={{title: "Roomix"}}
         />
 

@@ -13,7 +13,8 @@ import { State, City } from "country-state-city";
 import * as ImagePicker from "expo-image-picker";
 import { AntDesign } from "@expo/vector-icons";
 import { RoomPost, storage } from "../../Database/Firestore";
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { ref, uploadBytes, getDownloadURL, uploadBytesResumable } from "firebase/storage";
+
 
 
 const RoomDetails = ({ navigation }) => {
@@ -47,6 +48,7 @@ const RoomDetails = ({ navigation }) => {
     value: state.isoCode,
     label: state.name,
   }));
+
   const cityNames = cities.map((city) => ({
     value: city.name,
     label: city.name,
@@ -83,11 +85,29 @@ const RoomDetails = ({ navigation }) => {
 
     // Loop through selected images and upload them to Firebase Storage
     for (const uri of selectedImages) {
-      const storageRef = ref(storage, "images/" + Date.now()); // You can change the path as needed
-      const response = await uploadBytes(storageRef, uri);
+      console.log(uri, "URLs of images")
+      const blobImage = await new Promise((resolve, reject) => {
+        const xhr = new XMLHttpRequest();
+        xhr.onload = function(){
+          resolve(xhr.response)
+        };
+        xhr.onerror = function() {
+          reject(new TypeError('Network request failed'));
+        }
+        xhr.responseType = 'blob'
+        xhr.open("GET", uri, true);
+        xhr.send(null);
+      })
+      /** @type {any} */
+const metadata = {
+  contentType: 'image/jpeg'
+};
+      const storageRef = ref(storage, "images/" + Date.now() + ".jpg"); // You can change the path as needed
+      const response = await uploadBytes(storageRef, blobImage);
+      // uploadBytesResumable(storageRef, blobImage, metadata);
       const downloadURL = await getDownloadURL(storageRef);
       downloadURLs.push(downloadURL);
-    }
+    } // ?
 
     RoomPost(FlatSize, RoommateCount, TotalRent, AddressL1, selectedState, selectedCity, description, downloadURLs)
     console.log(FlatSize, RoommateCount, TotalRent, AddressL1, selectedState, selectedCity, description, downloadURLs)
@@ -242,10 +262,10 @@ const RoomDetails = ({ navigation }) => {
         <View style={styles.alignEnd}>
           <Pressable
             style={styles.Save}
-            // onPress={SendData}
-            onPress={() => {
-              navigation.navigate("RoomPreference");
-            }}
+            onPress={SendData}
+            // onPress={() => {
+            //   navigation.navigate("RoomPreference");
+            // }}
           >
             <Text style={styles.SaveTxt}>Save</Text>
           </Pressable>
