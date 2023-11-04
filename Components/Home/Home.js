@@ -32,11 +32,14 @@ const Home = ({ navigation }) => {
         setData(roomsData)
       }
       else{
-        setData(roomsData.map((item)=>{
-            if(searchText in item.Description){
-              return item;
-            }
-        }))
+        const filteredData = roomsData.filter((item) =>
+        item.Description.includes(searchText) ||
+        item.FlatSize.includes(searchText) ||
+        item.AddressL1.includes(searchText) ||
+        item.SelectedState.includes(searchText) ||
+        item.SelectedCity.includes(searchText) 
+      );
+      setData(filteredData);
       }
     }
 
