@@ -1,5 +1,4 @@
 import firebase from 'firebase/compat/app';
-import { getDatabase} from 'firebase/database'
 import "firebase/firestore";
 import { initializeApp } from "firebase/app";
 import { getFirestore} from "firebase/firestore";
@@ -116,4 +115,12 @@ const ViewRooms = async () => {
   return data
 }
 
-export {Registration, RoomPost, storage, RoomPreferred, Loggedin, ViewRooms};
+const toggleFvt = async (id, fvt) => {
+  const FvtRef = doc(db, "Rooms", id);
+  await updateDoc(FvtRef, {
+    isFvt: fvt
+  });
+  console.log("updated Successfully")
+}
+
+export {Registration, RoomPost, db, storage, RoomPreferred, Loggedin, ViewRooms, toggleFvt};

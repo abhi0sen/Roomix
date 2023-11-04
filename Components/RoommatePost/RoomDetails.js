@@ -262,10 +262,10 @@ const metadata = {
         <View style={styles.alignEnd}>
           <Pressable
             style={styles.Save}
-            onPress={SendData}
-            // onPress={() => {
-            //   navigation.navigate("RoomPreference");
-            // }}
+            // onPress={SendData}
+            onPress={() => {
+              navigation.navigate("RoomPreference");
+            }}
           >
             <Text style={styles.SaveTxt}>Save</Text>
           </Pressable>

@@ -1,13 +1,44 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import storage from '../Storage';
 import { Text, Image, View, Button, Pressable } from 'react-native';
 import Styles from "./Styles"
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
+const setNewInstall = async(status) => {
+  await AsyncStorage.setItem("NewInstall", status)
+}
 
+const getNewInstall = async() => {
+  const NewInstall = await AsyncStorage.getItem("NewInstall")
+  // return NewInstall
+}
+
+async function checkIfFreshlyInstalled() {
+  try {
+    const isFirstLaunch = await AsyncStorage.getItem('isFirstLaunch');
+    return isFirstLaunch === null || isFirstLaunch === 'true';
+  } catch (error) {
+    console.error(error);
+    return true; // Assume first launch in case of an error
+  }
+}
 
 export default function NewToCity({navigation}) {
+  const [isFreshlyInstalled, setIsFreshlyInstalled] = useState(false);
+
+  useEffect(() => {
+    checkIfFreshlyInstalled().then((result) => {
+      setIsFreshlyInstalled(result);
+      if (result) {
+        // Set the flag to indicate that this is not the first launch
+        AsyncStorage.setItem('isFirstLaunch', 'false');
+      }
+    });
+  }, []);
+
   const [screen, setScreen] = useState(1);
-  if (screen == 1){
+  console.log(getNewInstall())
+  if (screen == 1 && isFreshlyInstalled){
   return (
     <View style={Styles.Container}>
       <Image source={require("../../Images/NewToCity.jpg")}></Image>
@@ -39,7 +70,7 @@ else if (screen == 2){
   </View>
   );
 }
-else{
+else if (screen == 3){
   return (
     <View style={Styles.Container}>
     <Image source={require("../../Images/Explore.jpg")}></Image>
@@ -49,12 +80,8 @@ else{
     <Image style={Styles.ProgressBar} source={require("../../Images/ProgressBar3.jpg")} />
 
     <Pressable style = {Styles.NextButton} onPress={()=>{
-      storage.save({
-        key: 'loginState',
-        id: '1001',
-        data: "1",
-        expires: null
-      });    
+      setNewInstall('true')
+      console.log(getNewInstall()._j)
       navigation.navigate('Login')
     }}>
     <Text style={Styles.NextText}>Get Started</Text>
@@ -62,6 +89,10 @@ else{
 
   </View>
     );
+}
+else{
+  console.log(getNewInstall()._j)
+  navigation.navigate('Login')
 }
 }
 

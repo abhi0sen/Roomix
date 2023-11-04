@@ -46,7 +46,7 @@ const RoomStyle = StyleSheet.create({
     RoomImg:{
       // width: "100%",
       width: "100%",
-      height: 220,
+      height: 200,
       objectFit: 'cover'
     },
     RoomDetails:{

@@ -12,19 +12,36 @@ import {
 import { AntDesign, EvilIcons } from "@expo/vector-icons";
 import RoomCard from "./RoomCard";
 import styles from "./RoomStyle";
-import { ViewRooms } from "../../Database/Firestore";
+import { ViewRooms, db } from "../../Database/Firestore";
 
 const Home = ({ navigation }) => {
   const [data, setData] = useState([]);
+  const [searchText, setSearchText] = useState("");
+  // console.log(data.map((item)=>{
+  //   if(item.Description = "Hai Shri krishna"){
+  //     return item;
+  //   }
+  // }))
 
   useEffect(() => {
     async function fetchData() {
       const roomsData = await ViewRooms();
       setData(roomsData);
+      
+      if(searchText == ""){
+        setData(roomsData)
+      }
+      else{
+        setData(roomsData.map((item)=>{
+            if(searchText in item.Description){
+              return item;
+            }
+        }))
+      }
     }
 
     fetchData();
-  }, []);
+  }, [searchText]);
 
   return (
     <SafeAreaView>
@@ -39,7 +56,7 @@ const Home = ({ navigation }) => {
               color="#c3c2c2"
             />
 
-            <TextInput placeholder="Search" />
+            <TextInput placeholder="Search" onChangeText={setSearchText} />
           </View>
 
           <View style={styles.Filter}>
@@ -53,25 +70,8 @@ const Home = ({ navigation }) => {
           <FlatList
           data={data}
           keyExtractor={(item, index) => index.toString()}
-          renderItem={({item})=>{return <RoomCard item = {item} navigation={navigation} />}}
+          renderItem={({item})=>{return <RoomCard item = {item} navigation={navigation} db = {db} />}}
           />
-          {/* <FlatList
-            data={data}
-            keyExtractor={(item, index) => index.toString()}
-            renderItem={({ item }) => (
-              <View>
-                <RoomCard
-                  SelectedCity={item.SelectedCity}
-                  SelectedState={item.SelectedState}
-                  FlatSize={item.FlatSize}
-                  RoommateCount={item.RoommateCount}
-                  TotalRent={item.TotalRent}
-                  ImageUrl = {item.ImageUrls.split(",")[0]}
-                  navigation={navigation}
-                />
-              </View>
-            )}
-          /> */}
         </View>
 
         {/* <RoomCard navigation={navigation} />

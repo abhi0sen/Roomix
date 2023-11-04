@@ -34,6 +34,9 @@ const ChatStyles = StyleSheet.create({
       Mh3: {
         marginVertical: 2
       },
+      Pt3: {
+        paddingTop: 10
+      },
       FloatEnd: {
         position: 'absolute',
         right: 10
@@ -48,7 +51,6 @@ const ChatStyles = StyleSheet.create({
         padding: 10,
         borderRadius: 10,
         marginTop: 10,
-        marginRight: 10,
         fontSize: 15
       },
       Reciever: {
@@ -61,8 +63,32 @@ const ChatStyles = StyleSheet.create({
         padding: 10,
         borderRadius: 10,
         marginTop: 10,
-        marginLeft: 10,
         fontSize: 15,
+      },
+      Message:{
+        position: 'absolute',
+        bottom: 10,
+        
+      },
+      MsgBox:{
+        width: "80%",
+        marginLeft: 10
+      },
+      MessageGrp1:{
+        marginHorizontal: 20,
+        borderWidth: 1,
+        marginHorizontal: 8,
+        borderColor: "#bbbbbb",
+        borderRadius: 10,
+        width: "88%",
+        paddingHorizontal: 10,
+        paddingVertical: 8,
+        flexDirection: "row"
+      },
+      SendBtn: {
+        backgroundColor: "#FFBA1B",
+        borderRadius: 20,
+        padding: 10,
       }
 })
 
