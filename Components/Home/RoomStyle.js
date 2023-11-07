@@ -98,7 +98,40 @@ const RoomStyle = StyleSheet.create({
     },
     LastSection: {
       marginBottom: 40
+    },
+    // Filter
+    FilterBox: {
+      backgroundColor: 'white', 
+      padding: 16,
+      flexDirection: 'row',
+      // justifyContent: 'space-between',
+      paddingHorizontal: 25,
+      paddingBottom: 15
+      
+      
+    },
+    FilterCriteria: {
+      fontSize: 20,
+    },
+    FilterValues: {
+      paddingLeft: 15,
+    },
+    ValueTxt: {
+      fontSize: 15,
+      color: '#2b2b2b',
+      paddingHorizontal: 25
+    },
+    ValueHead: {
+      fontSize: 17,
+      color: '#2b2b2b',
+      paddingHorizontal: 5
+    },
+    RoundBtn: {
+      borderWidth: 1,
+      borderRadius: 20,
+      padding: 5,
+      margin: 5
     }
-  })
+});
 
 export default RoomStyle

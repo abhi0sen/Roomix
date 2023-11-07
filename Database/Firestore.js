@@ -30,6 +30,7 @@ const setUserId = async(userId) => {
 
 const getUserId = async() => {
     const userId = await AsyncStorage.getItem("userId")
+    return userId
 }
 
 const Registration = async (username, password, mobile) => {
@@ -65,7 +66,7 @@ const querySnapshot = await getDocs(q);
 
 }
 
-const RoomPost = async (FlatSize, RoommateCount, TotalRent, AddressL1, SelectedState, SelectedCity, Description, ImageUrls) => {
+const RoomPost = async (FlatSize, RoommateCount, TotalRent, AddressL1, SelectedState, SelectedCity, Description, ImageUrls, ageGroup, Gender, Meal, OtherCriteria) => {
   try {
     const docRef = await addDoc(collection(db, "Rooms"), {
       FlatSize: `${FlatSize}`,
@@ -76,6 +77,12 @@ const RoomPost = async (FlatSize, RoommateCount, TotalRent, AddressL1, SelectedS
       SelectedCity: `${SelectedCity}`,
       Description: `${Description}`,
       ImageUrls: `${ImageUrls}`,
+      AgeGroup: `${ageGroup}`,
+      Gender: `${Gender}`,
+      Meal: `${Meal}`,
+      OtherCriteria: `${OtherCriteria}`,
+      UserID: `${getUserId()}`,
+      isFvt: true
     });
     console.log("Document written with ID: ", docRef.id);
     // return docRef.id;

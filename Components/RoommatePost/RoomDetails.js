@@ -25,6 +25,9 @@ const RoomDetails = ({ navigation }) => {
   const [selectedState, setSelectedState] = useState("");
   const [selectedCity, setSelectedCity] = useState("");
   const [description, setDescription] = useState("");
+  const [downloadUrls, setDownloadUrls] = useState([])
+
+  const [prevData, setPrevData] = useState();
   
   
   const data = [
@@ -80,7 +83,7 @@ const RoomDetails = ({ navigation }) => {
   };
 
   // const SendImages
-  const SendData = async () => {
+  const ImgProcess = async () => {
     const downloadURLs = [];
 
     // Loop through selected images and upload them to Firebase Storage
@@ -109,8 +112,14 @@ const metadata = {
       downloadURLs.push(downloadURL);
     } // ?
 
-    RoomPost(FlatSize, RoommateCount, TotalRent, AddressL1, selectedState, selectedCity, description, downloadURLs)
-    console.log(FlatSize, RoommateCount, TotalRent, AddressL1, selectedState, selectedCity, description, downloadURLs)
+    setDownloadUrls(downloadURLs)
+
+    // RoomPost(FlatSize, RoommateCount, TotalRent, AddressL1, selectedState, selectedCity, description, downloadURLs)
+    // console.log(FlatSize, RoommateCount, TotalRent, AddressL1, selectedState, selectedCity, description, downloadURLs)
+    setPrevData(FlatSize, RoommateCount, TotalRent, AddressL1, selectedState, selectedCity, description, downloadURLs)
+    console.log(prevData)
+
+    
 
   };
 
@@ -263,8 +272,18 @@ const metadata = {
           <Pressable
             style={styles.Save}
             // onPress={SendData}
-            onPress={() => {
-              navigation.navigate("RoomPreference");
+            onPress={async () => {
+              await ImgProcess();
+              navigation.navigate("RoomPreference",{
+                FlatSize:  FlatSize, 
+                RoommateCount: RoommateCount, 
+                TotalRent: TotalRent,
+                AddressL1:  AddressL1,
+                selectedState: selectedState,
+                selectedCity: selectedCity,
+                description: description, 
+                downloadURLs: downloadUrls}
+                );
             }}
           >
             <Text style={styles.SaveTxt}>Save</Text>

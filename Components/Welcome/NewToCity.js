@@ -38,7 +38,7 @@ export default function NewToCity({navigation}) {
 
   const [screen, setScreen] = useState(1);
   console.log(getNewInstall())
-  if (screen == 1 && isFreshlyInstalled){
+  if (screen == 1 && !isFreshlyInstalled){
   return (
     <View style={Styles.Container}>
       <Image source={require("../../Images/NewToCity.jpg")}></Image>

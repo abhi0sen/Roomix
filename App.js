@@ -88,7 +88,7 @@ function App(){
         <Stack.Screen
         name='RoomPreference'
         component= {RoomPreference}
-        options={{title: "Roomix"}}
+        options={{title: "Roomix"}} prevData
         />
         
         <Stack.Screen

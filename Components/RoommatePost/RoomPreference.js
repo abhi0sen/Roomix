@@ -10,18 +10,23 @@ import {
 } from "react-native";
 import { RangeSlider } from "@react-native-assets/slider";
 import styles from "./style";
-import { RoomPreferred } from '../../Database/Firestore'
+import { RoomPreferred, RoomPost } from '../../Database/Firestore'
 
-const RoomPreference = ({ navigation }) => {
-  const [value, setValue] = React.useState(0);
-  const [range, setRange] = React.useState([0, 0]);
-  const [max, setMax] = React.useState(1);
+const RoomPreference = ({ navigation, route}) => {
+  const [value, setValue] = useState([19, 55]);
+  const [max, setMax] = useState(1);
   const [Gender, setGender] = useState("")
   const [Meal, setMeal] = useState("")
   const [OtherCriteria, setOtherCriteria] = useState("")
 
+  const {FlatSize, RoommateCount, TotalRent, AddressL1, selectedState, selectedCity, description, downloadURLs} = route.params;
 
-  React.useEffect(() => {
+  const PublishData = () =>{
+    RoomPost(FlatSize, RoommateCount, TotalRent, AddressL1, selectedState, selectedCity, description, downloadURLs, value, Gender, Meal, OtherCriteria)
+  }
+  console.log(FlatSize, RoommateCount, TotalRent, AddressL1, selectedState, selectedCity, description, downloadURLs, value, Gender, Meal, OtherCriteria)
+
+  useEffect(() => {
     setInterval(() => setMax((max) => max + 1), 2000);
   }, []);
 
@@ -55,11 +60,11 @@ const RoomPreference = ({ navigation }) => {
 
       <Text style={styles.Label}>Age Group</Text>
       <RangeSlider
-        range={[19, 55]}
-        minimumValue={10}
-        maximumValue={65}
+        range={value}
+        minimumValue={19}
+        maximumValue={55}
         step={1}
-        minimumRange={2}
+        minimumRange={5}
         crossingAllowed={false}
         outboundColor="#B6B6B6"
         inboundColor="#FFC848"
@@ -72,8 +77,8 @@ const RoomPreference = ({ navigation }) => {
         vertical={false}
   inverted={false} 
         enabled={true}
-        trackHeight={3}
-        thumbSize={13}
+        trackHeight={4}
+        thumbSize={15}
         thumbImage={undefined}
         slideOnTap={true} 
         onValueChange={setValue}
@@ -99,6 +104,7 @@ const RoomPreference = ({ navigation }) => {
         <Pressable
           style={styles.Save}
           onPress={() => {
+            PublishData()
             alert("Your Request is Sent for Verification!!");
             navigation.navigate("Home");
             // RoomPreferred(Gender, Meal, value, OtherCriteria)
