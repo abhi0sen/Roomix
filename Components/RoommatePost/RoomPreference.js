@@ -24,7 +24,7 @@ const RoomPreference = ({ navigation, route}) => {
   const PublishData = () =>{
     RoomPost(FlatSize, RoommateCount, TotalRent, AddressL1, selectedState, selectedCity, description, downloadURLs, value, Gender, Meal, OtherCriteria)
   }
-  console.log(FlatSize, RoommateCount, TotalRent, AddressL1, selectedState, selectedCity, description, downloadURLs, value, Gender, Meal, OtherCriteria)
+  // console.log(FlatSize, RoommateCount, TotalRent, AddressL1, selectedState, selectedCity, description, downloadURLs, value, Gender, Meal, OtherCriteria)
 
   useEffect(() => {
     setInterval(() => setMax((max) => max + 1), 2000);

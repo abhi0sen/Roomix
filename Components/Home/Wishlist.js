@@ -10,12 +10,21 @@ const Wishlist = ({navigation}) => {
   useEffect(() => {
     async function fetchData() {
       const roomsData = await ViewRooms();
-      setData(roomsData);
+      // setData(roomsData);
+      
+      const filteredData = roomsData.filter(
+        (item) =>
+        item.isFvt == false 
+      );
+      setData(filteredData);
     }
 
-    fetchData();
-  }, [dataUpdated]);
+    
 
+    fetchData();
+  }, [data || dataUpdated]);
+  
+  // setDataUpdated(!dataUpdated)
   // setInterval(()=>{
   //   setDataUpdated(!dataUpdated)
   // }, 2000)

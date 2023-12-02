@@ -1,11 +1,13 @@
 import React, { useState } from 'react'
-import { View, Text, Image, TextInput, StyleSheet, Pressable } from "react-native"
+import { View, Text, Image, TextInput, StyleSheet, Pressable, SafeAreaView, ScrollView } from "react-native"
 import {Loggedin} from "../../Database/Firestore"
 
 const Login = ({navigation}) => {
     const [username, setUsername] = useState();
     const [password, setPassword] = useState();
   return (
+    <SafeAreaView style={{height: '100%', backgroundColor: "#fff"}}>
+    <ScrollView>
     <View style={styles.Container}>
       <Image source={require("../../Images/UserOnboard/login.jpg")} />
       <TextInput
@@ -29,8 +31,8 @@ const Login = ({navigation}) => {
 
       <View>
             <Pressable style={styles.SignIn} onPress={()=> {
-                // Loggedin(username, password, navigation)
-                navigation.navigate("Home")
+                Loggedin(username, password, navigation)
+                // navigation.navigate("Home")
             }}>
                 <Text style={styles.SignInText}>Sign In</Text>
             </Pressable>
@@ -38,6 +40,8 @@ const Login = ({navigation}) => {
       </View>
 
       </View>
+      </ScrollView>
+      </SafeAreaView>
   )
 }
 

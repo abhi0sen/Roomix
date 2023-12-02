@@ -4,17 +4,33 @@ import Room from '../../Images/Room.jpg'
 import styles from './RoomStyle' 
 import { doc, updateDoc } from "firebase/firestore";
 import {toggleFvt} from '../../Database/Firestore'
+import { Feather } from '@expo/vector-icons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 // const RoomCard = ({navigation, SelectedCity, SelectedState, FlatSize, TotalRent, RoommateCount, ImageUrl}) => {
   const RoomCard = ({navigation, item}) => {
-  // const temp = (item.isFvt==null)? item.isFvt:true
+  const [edit, setEdit] = useState(false);
   const [fvt, setFvt] = useState(item.isFvt)
   // const toogleFvt = async () => {
   //   const newFvt= !fvt
   //   setFvt(newFvt);
   //     }
 
+  const isAdmin = async () => {
+    try {
+        const userType = await AsyncStorage.getItem("userType");
+        if (userType == "admin"){
+          setEdit(true)
+        }
+    } catch (error) {
+        console.error("Error retrieving user ID:", error);
+    }
+  };
+
+  
   useEffect(() => {
+    isAdmin()
     toggleFvt(item.id, fvt)
   }, [fvt]);
 
@@ -31,12 +47,11 @@ import {toggleFvt} from '../../Database/Firestore'
         Address: item.AddressL1,
 
         // Requirements
-        Gender: "Male",
+        Gender: item.Gender,
         RoommateCount: item.RoommateCount,
-        otherCriteria: "The Room partner should be non-smoker and avoid partying after 10:00 PM",
+        otherCriteria: item.OtherCriteria,
         Description: item.Description,
         isFvt: item.isFvt,
-
       });
     }}>
       <View style={styles.Room}>
@@ -55,16 +70,19 @@ import {toggleFvt} from '../../Database/Firestore'
         <Text>{item.SelectedCity}, {item.SelectedState}</Text>
         
         <View style={styles.LocPrice}>
-        <Text>Roommates Needed - 1/{item.RoommateCount}</Text>
+        <Text>Roommates Needed - {item.RoommateCount}</Text>
 
-        <Pressable onPress={async ()=>{
-          
-          setFvt(!fvt)
-          
-          }}>
-
-        <Text>{(fvt) ? '❤️': '🤍'}</Text>
+        {edit? 
+        <Pressable>
+        <Feather name="edit-2" size={18} color="black" />
         </Pressable>
+        :
+        <Pressable onPress={()=>{
+          setFvt(!fvt)
+          }}>
+        <Text>{(fvt) ? '🤍' : '❤️'}</Text>
+        </Pressable>
+        }
         </View>
 
         </View>

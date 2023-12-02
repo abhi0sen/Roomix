@@ -24,14 +24,20 @@ const app = initializeApp(config);
 const db = getFirestore(app);
 const storage = getStorage(app);
 
-const setUserId = async(userId) => {
+const setUserId = async(userId, userType) => {
     await AsyncStorage.setItem("userId", userId)
+    await AsyncStorage.setItem("userType", userType)
 }
 
-const getUserId = async() => {
-    const userId = await AsyncStorage.getItem("userId")
-    return userId
-}
+const getUserId = async () => {
+  try {
+      const userId = await AsyncStorage.getItem("userId");
+      return userId
+  } catch (error) {
+      console.error("Error retrieving user ID:", error);
+      return 0;
+  }
+};
 
 const Registration = async (username, password, mobile) => {
 
@@ -39,14 +45,14 @@ try {
     const docRef = await addDoc(collection(db, "users"), {
       username: `${username}`,
       password: `${password}`,
-      mobile: `${mobile}`
+      mobile: `${mobile}`,
+      userType: `${user}`
     });
     console.log("Document written with ID: ", docRef.id);
     setUserId(docRef.id)
   } catch (e) {
     console.error("Error adding document: ", e);
   }
-
 }
 
 const Loggedin = async(username, password, navigation) => {
@@ -57,13 +63,18 @@ const querySnapshot = await getDocs(q);
 
   querySnapshot.forEach((doc) => {
     // doc.data() is never undefined for query doc snapshots
-    setUserId(doc.id)
     console.log(doc.id, " => ", doc.data());
-    navigation.navigate("Home")
+    setUserId(doc.id, doc.data().userType)
+
+    if(doc.data().userType == "admin"){
+      navigation.navigate("AdminHome")
+    } else{
+      navigation.navigate("Home")
+    }
+    // console.log(doc.data().user)
     return true;
   });
   return false;
-
 }
 
 const RoomPost = async (FlatSize, RoommateCount, TotalRent, AddressL1, SelectedState, SelectedCity, Description, ImageUrls, ageGroup, Gender, Meal, OtherCriteria) => {
@@ -81,7 +92,7 @@ const RoomPost = async (FlatSize, RoommateCount, TotalRent, AddressL1, SelectedS
       Gender: `${Gender}`,
       Meal: `${Meal}`,
       OtherCriteria: `${OtherCriteria}`,
-      UserID: `${getUserId()}`,
+      UserID: `${await getUserId()}`,
       isFvt: true
     });
     console.log("Document written with ID: ", docRef.id);
@@ -115,8 +126,6 @@ const ViewRooms = async () => {
   const querySnapshot = await getDocs(collection(db, "Rooms"));
   data = []
   querySnapshot.forEach((doc) => {
-    // doc.data() is never undefined for query doc snapshots
-    // console.log(doc.id, " => ", doc.data());
     data.push({ id: doc.id, ...doc.data() })
   });
   return data

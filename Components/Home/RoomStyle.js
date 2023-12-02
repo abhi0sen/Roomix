@@ -131,6 +131,15 @@ const RoomStyle = StyleSheet.create({
       borderRadius: 20,
       padding: 5,
       margin: 5
+    },
+    Budget: {
+      flexDirection:'row',
+      justifyContent: 'space-between',
+      marginHorizontal: 15
+    },
+    Active: {
+      borderColor: "#f9a825",
+      borderWidth: 2,
     }
 });
 

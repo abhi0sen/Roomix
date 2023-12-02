@@ -13,9 +13,12 @@ import { State, City } from "country-state-city";
 import * as ImagePicker from "expo-image-picker";
 import { AntDesign } from "@expo/vector-icons";
 import { RoomPost, storage } from "../../Database/Firestore";
-import { ref, uploadBytes, getDownloadURL, uploadBytesResumable } from "firebase/storage";
-
-
+import {
+  ref,
+  uploadBytes,
+  getDownloadURL,
+  uploadBytesResumable,
+} from "firebase/storage";
 
 const RoomDetails = ({ navigation }) => {
   const [FlatSize, setFlatSize] = useState(null);
@@ -25,11 +28,10 @@ const RoomDetails = ({ navigation }) => {
   const [selectedState, setSelectedState] = useState("");
   const [selectedCity, setSelectedCity] = useState("");
   const [description, setDescription] = useState("");
-  const [downloadUrls, setDownloadUrls] = useState([])
+  const [downloadUrls, setDownloadUrls] = useState([]);
 
   const [prevData, setPrevData] = useState();
-  
-  
+
   const data = [
     { label: "1 BHK", value: "1 BHK" },
     { label: "2 BHK", value: "2 BHK" },
@@ -88,39 +90,44 @@ const RoomDetails = ({ navigation }) => {
 
     // Loop through selected images and upload them to Firebase Storage
     for (const uri of selectedImages) {
-      console.log(uri, "URLs of images")
+      console.log(uri, "URLs of images");
       const blobImage = await new Promise((resolve, reject) => {
         const xhr = new XMLHttpRequest();
-        xhr.onload = function(){
-          resolve(xhr.response)
+        xhr.onload = function () {
+          resolve(xhr.response);
         };
-        xhr.onerror = function() {
-          reject(new TypeError('Network request failed'));
-        }
-        xhr.responseType = 'blob'
+        xhr.onerror = function () {
+          reject(new TypeError("Network request failed"));
+        };
+        xhr.responseType = "blob";
         xhr.open("GET", uri, true);
         xhr.send(null);
-      })
+      });
       /** @type {any} */
-const metadata = {
-  contentType: 'image/jpeg'
-};
-      const storageRef = ref(storage, "images/" + Date.now() + ".jpg"); // You can change the path as needed
+      const metadata = {
+        contentType: "image/jpeg",
+      };
+      const storageRef = ref(storage, "images/" + Date.now() + ".jpg"); 
       const response = await uploadBytes(storageRef, blobImage);
-      // uploadBytesResumable(storageRef, blobImage, metadata);
       const downloadURL = await getDownloadURL(storageRef);
       downloadURLs.push(downloadURL);
-    } // ?
+    } 
 
-    setDownloadUrls(downloadURLs)
+    setDownloadUrls(downloadURLs);
 
     // RoomPost(FlatSize, RoommateCount, TotalRent, AddressL1, selectedState, selectedCity, description, downloadURLs)
     // console.log(FlatSize, RoommateCount, TotalRent, AddressL1, selectedState, selectedCity, description, downloadURLs)
-    setPrevData(FlatSize, RoommateCount, TotalRent, AddressL1, selectedState, selectedCity, description, downloadURLs)
-    console.log(prevData)
-
-    
-
+    setPrevData(
+      FlatSize,
+      RoommateCount,
+      TotalRent,
+      AddressL1,
+      selectedState,
+      selectedCity,
+      description,
+      downloadURLs
+    );
+    console.log(prevData);
   };
 
   // The App------------------------------------->
@@ -152,7 +159,11 @@ const metadata = {
         <Text style={styles.Label}>Roommates Required</Text>
         <View style={styles.NoOfRoommate}>
           <Pressable
-            style={(RoommateCount==1)?[styles.RmCount, styles.Active]: styles.RmCount}
+            style={
+              RoommateCount == 1
+                ? [styles.RmCount, styles.Active]
+                : styles.RmCount
+            }
             onPress={() => {
               setRoommateCount(1);
             }}
@@ -160,7 +171,11 @@ const metadata = {
             <Text style={styles.RmText}>1</Text>
           </Pressable>
           <Pressable
-            style={(RoommateCount==2)?[styles.RmCount, styles.Active]: styles.RmCount}
+            style={
+              RoommateCount == 2
+                ? [styles.RmCount, styles.Active]
+                : styles.RmCount
+            }
             onPress={() => {
               setRoommateCount(2);
             }}
@@ -168,7 +183,11 @@ const metadata = {
             <Text style={styles.RmText}>2</Text>
           </Pressable>
           <Pressable
-            style={(RoommateCount==3)?[styles.RmCount, styles.Active]: styles.RmCount}
+            style={
+              RoommateCount == 3
+                ? [styles.RmCount, styles.Active]
+                : styles.RmCount
+            }
             onPress={() => {
               setRoommateCount(3);
             }}
@@ -176,7 +195,11 @@ const metadata = {
             <Text style={styles.RmText}>3</Text>
           </Pressable>
           <Pressable
-            style={(RoommateCount==4)?[styles.RmCount, styles.Active]: styles.RmCount}
+            style={
+              RoommateCount == 4
+                ? [styles.RmCount, styles.Active]
+                : styles.RmCount
+            }
             onPress={() => {
               setRoommateCount(4);
             }}
@@ -274,16 +297,16 @@ const metadata = {
             // onPress={SendData}
             onPress={async () => {
               await ImgProcess();
-              navigation.navigate("RoomPreference",{
-                FlatSize:  FlatSize, 
-                RoommateCount: RoommateCount, 
+              navigation.navigate("RoomPreference", {
+                FlatSize: FlatSize,
+                RoommateCount: RoommateCount,
                 TotalRent: TotalRent,
-                AddressL1:  AddressL1,
+                AddressL1: AddressL1,
                 selectedState: selectedState,
                 selectedCity: selectedCity,
-                description: description, 
-                downloadURLs: downloadUrls}
-                );
+                description: description,
+                downloadURLs: downloadUrls,
+              });
             }}
           >
             <Text style={styles.SaveTxt}>Save</Text>

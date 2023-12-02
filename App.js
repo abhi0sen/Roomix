@@ -17,9 +17,15 @@ import Wishlist from './Components/Home/Wishlist';
 import ChatList from './Components/Chatting/ChatList';
 import UserProfile from './Components/Profile/UserProfile';
 
+import MyListing from './Components/Profile/MyListing';
+import AdminHome from './Components/Admin/AdminHome';
+import Request from './Components/Admin/Request';
+import Notifications from './Components/Admin/Notifications';
+
+
 // Icons
 
-import { Ionicons, FontAwesome, AntDesign } from '@expo/vector-icons';
+import { MaterialCommunityIcons, Ionicons, FontAwesome, AntDesign } from '@expo/vector-icons';
 import ChatLayout from './Components/Chatting/ChatLayout';
 
 const Stack = createNativeStackNavigator();
@@ -97,6 +103,32 @@ function App(){
         options={{title: "Roomix"}}
         />
 
+        <Stack.Screen
+        name='MyListing'
+        component= {MyListing}
+        options={{title: "Roomix"}}
+        />
+
+        {/* Admin Stacks */}
+
+        <Stack.Screen
+        name='AdminHome'
+        component= {AdminTabNavigator}
+        options={{title: "Roomix", gestureEnabled: false, headerLeft: () => null, headerBackVisible: false }}
+        />
+
+        <Stack.Screen
+        name='Request'
+        component= {Request}
+        options={{title: "Roomix"}}
+        />        
+
+        <Stack.Screen
+        name='Notification'
+        component= {Notifications}
+        options={{title: "Roomix"}}
+        />        
+
         </Stack.Navigator>
 
     </NavigationContainer>
@@ -115,13 +147,35 @@ function TabNavigator() {
       <Tab.Screen name="Wishlist" component={Wishlist} options={{headerShown: false, tabBarIcon: ({ color, size }) => (
             <FontAwesome name="heart-o" size={24} color="black" />
           ),}} />
-      <Tab.Screen name="AddPost" component={IsRoommate} options={{headerShown: false, tabBarIcon: ({ color, size }) => (
+      <Tab.Screen name="AddPost" component={RoomDetails} options={{headerShown: false, tabBarIcon: ({ color, size }) => (
             <Ionicons name="add-circle-outline" size={24} color="black" />
           ),}} />
       <Tab.Screen name="ChatList" component={ChatList} options={{headerShown: false, tabBarIcon: ({ color, size }) => (
             <Ionicons name="chatbubbles-outline" size={24} color="black" />
           ),}} />
       <Tab.Screen name="UserProfile" component={UserProfile} options={{headerShown: false, tabBarIcon: ({ color, size }) => (
+            <AntDesign name="user" size={24} color="black" />
+          ),}} />
+    </Tab.Navigator>
+  );
+}
+
+function AdminTabNavigator() {
+  return (
+    <Tab.Navigator>
+      <Tab.Screen name="Home" component={AdminHome} options={{headerShown: false, tabBarIcon: ({ color, size }) => (
+            <Ionicons name="home-outline" size={24} color="black" />
+          ),}} />
+      <Tab.Screen name="Request" component={Request} options={{headerShown: false, tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons name="home-plus-outline" size={24} color="black" />
+          ),}} />
+      <Tab.Screen name="AddPost" component={RoomDetails} options={{headerShown: false, tabBarIcon: ({ color, size }) => (
+            <Ionicons name="add-circle-outline" size={24} color="black" />
+          ),}} />
+      <Tab.Screen name="Notification" component={Notifications} options={{headerShown: false, tabBarIcon: ({ color, size }) => (
+            <Ionicons name="notifications-outline" size={24} color="black" />
+          ),}} />
+      <Tab.Screen name="Profile" component={UserProfile} options={{headerShown: false, tabBarIcon: ({ color, size }) => (
             <AntDesign name="user" size={24} color="black" />
           ),}} />
     </Tab.Navigator>

@@ -25,7 +25,6 @@ const RoomView = ({route}) => {
       <Text style = {styles.Title}>{FlatSize} Flat</Text>
       <View style = {styles.Room}>
         <SliderBox images={imageUrls} />
-      {/* <Image source={Room} /> */}
       </View>
       <View style={[styles.LocPrice, styles.Mt5]}>
       <Text style = {styles.TextBold}>{TotalRent} Rs/Month</Text>

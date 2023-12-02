@@ -1,26 +1,15 @@
-import React, { useState, useEffect } from "react";
-import {
-  View,
-  StyleSheet,
-  TextInput,
-  FlatList,
-  ScrollView,
-  Pressable,
-  Text,
-  SafeAreaView,
-  Modal,
-  TouchableOpacity,
-} from "react-native";
-import { AntDesign, EvilIcons } from "@expo/vector-icons";
-import RoomCard from "./RoomCard";
-import styles from "./RoomStyle";
+import React, {useState, useEffect} from 'react'
+import {FlatList, SafeAreaView, ScrollView, TextInput, View, Pressable, Text, Modal} from 'react-native'
+import RoomCard from '../Home/RoomCard'
 import { ViewRooms, db } from "../../Database/Firestore";
+import styles from "../Home/RoomStyle";
+import { AntDesign, EvilIcons } from "@expo/vector-icons";
 import { RangeSlider } from "@react-native-assets/slider";
 
-const Home = ({ navigation }) => {
+const AdminHome = ({navigation}) => {
   const [data, setData] = useState([]);
   const [searchText, setSearchText] = useState("");
-  
+
   const [filter, setFilter] = useState(null);
   const [range, setRange] = useState([1000, 100000]);
   const [Gender, setGender] = useState("");
@@ -29,6 +18,8 @@ const Home = ({ navigation }) => {
   const [Meal, setMeal] = useState("");
 
   const [filterData, setFilterData] = useState([]);
+
+  const [isFilterModalVisible, setFilterModalVisible] = useState(false);
 
   const RoomFilter = () => {
     let tempData = [...data]; // Copy the original data
@@ -53,34 +44,6 @@ const Home = ({ navigation }) => {
   setFilterData(tempData);
   }
 
-  useEffect(() => {
-    async function fetchData() {
-      const roomsData = await ViewRooms();
-      setData(roomsData);
-
-      if (searchText == "") {
-        setData(roomsData);
-      } else {
-        const filteredData = roomsData.filter(
-          (item) =>
-            item.Description.includes(searchText) ||
-            item.FlatSize.includes(searchText) ||
-            item.AddressL1.includes(searchText) ||
-            item.SelectedState.includes(searchText) ||
-            item.SelectedCity.includes(searchText)
-        );
-        setData(filteredData);
-      }
-    }
-
-    fetchData();
-    // GenderFilter();
-  // }, [searchText || data || filter]);
-  }, [searchText]);
-
-  // Filterbox
-  const [isFilterModalVisible, setFilterModalVisible] = useState(false);
-
   const showFilterModal = () => {
     setFilterModalVisible(true);
   };
@@ -93,11 +56,35 @@ const Home = ({ navigation }) => {
     setRange(temp);
   };
 
+  useEffect(() => {
+    async function fetchData() {
+        const roomsData = await ViewRooms();
+        setData(roomsData);
+        
+        // console.log(getUserId)
+        if (searchText == "") {
+          setData(roomsData);
+        } else {
+          const filteredData = roomsData.filter(
+            (item) =>
+              item.Description.includes(searchText) ||
+              item.FlatSize.includes(searchText) ||
+              item.AddressL1.includes(searchText) ||
+              item.SelectedState.includes(searchText) ||
+              item.SelectedCity.includes(searchText)
+          );
+          setData(filteredData);
+        }
+      }
+
+    fetchData();
+  }, [searchText]);
+
   return (
-    <SafeAreaView>
-      <ScrollView>
-        <View style={styles.Container}>
-          <View style={styles.TopBar}>
+    <SafeAreaView style={{height: '100%', marginHorizontal: 10}}>
+    <ScrollView>
+
+    <View style={styles.TopBar}>
             <View style={styles.SearchBar}>
               <EvilIcons
                 style={styles.SearchIcon}
@@ -120,24 +107,18 @@ const Home = ({ navigation }) => {
             </View>
           </View>
 
-          {/* <RoomCard navigation={navigation} /> */}
 
-          <View>
-            <FlatList
-              data={filterData.length > 0 ? filterData : data}
-              keyExtractor={(item, index) => index.toString()}
-              renderItem={({ item }) => {
-                return <RoomCard item={item} navigation={navigation} db={db} />;
-              }}
-            />
-          </View>
+      <FlatList
+          data={data}
+          keyExtractor={(item, index) => index.toString()}
+          renderItem={({ item }) => {
+            return <RoomCard item={item} navigation={navigation} db={db} />;
+          }}
+        />
 
-          {/* <RoomCard navigation={navigation} />
-        <RoomCard navigation={navigation} />
-        <RoomCard navigation={navigation} /> */}
-        </View>
-      </ScrollView>
-      <Modal
+    </ScrollView>
+
+    <Modal
         animationType="slide"
         transparent={true}
         visible={isFilterModalVisible}
@@ -377,8 +358,9 @@ const Home = ({ navigation }) => {
           </View>
         </View>
       </Modal>
-    </SafeAreaView>
-  );
-};
 
-export default Home;
+    </SafeAreaView>
+  )
+}
+
+export default AdminHome
