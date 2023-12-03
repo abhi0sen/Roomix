@@ -4,18 +4,18 @@ const Styles = StyleSheet.create({
     Container: {
         backgroundColor: "#ffffff",
         height: "100%",
-        paddingHorizontal: 10,
-      },
-      RequestBox:{
+    },
+    RequestBox:{
+          paddingHorizontal: 10,
         // marginTop: 0,
         elevation: 1,
-        // borderRadius: 5,
+        // borderRadius: 1,
         paddingVertical: 15,
         overflow: "hidden",
       },
       RoomImg: {
         width: 150,
-        height: 100,
+        height: '100%',
         alignSelf: "center",
         marginEnd: 10
         // borderRadius: 20,

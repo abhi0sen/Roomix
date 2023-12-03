@@ -55,7 +55,11 @@ const Home = ({ navigation }) => {
 
   useEffect(() => {
     async function fetchData() {
-      const roomsData = await ViewRooms();
+      let roomsData = await ViewRooms();
+      setData(roomsData);
+      roomsData = roomsData.filter((items) => 
+        items.status == "Verified"
+      )
       setData(roomsData);
 
       if (searchText == "") {

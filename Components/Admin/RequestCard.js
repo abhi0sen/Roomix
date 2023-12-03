@@ -1,20 +1,28 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import {View, Text, Image, Pressable} from 'react-native'
 import styles from "./Styles"
+import {updateStatus} from "../../Database/Firestore"
 
-const RequestCard = () => {
+const RequestCard = ({item}) => {
     const [isVerified, setIsVerified] = useState("Pending")
+    const Images = item.ImageUrls.split(",")
+
+
+    useEffect(() => {
+      updateStatus(item.id, isVerified)
+      // console.log(item.id)
+    }, [isVerified])
   return (
     <View style={[styles.RequestBox, styles.DFlex]}>
     <Image
-    source={require('../../Images/logo.jpg')}
+    source={{uri:Images[0]}}
     style={styles.RoomImg}
   />
 
   <View>
-    <Text style={{fontSize:20, fontWeight: 'bold'}}>2 BHK </Text>
-    <Text style={{fontSize:15}}>Pimpri, Pune</Text>
-    <Text style={{fontSize:15}}>Roommates Required - 4</Text>
+    <Text style={{fontSize:20, fontWeight: 'bold'}}>{item.FlatSize} </Text>
+    <Text style={{fontSize:15}}>{item.AddressL1}</Text>
+    <Text style={{fontSize:15}}>Roommates Required - {item.RoommateCount}</Text>
 
         {(isVerified == "Pending") ?
     <View style={[styles.DFlex, styles.ButtonGrp, styles.Mt5]}>

@@ -93,7 +93,8 @@ const RoomPost = async (FlatSize, RoommateCount, TotalRent, AddressL1, SelectedS
       Meal: `${Meal}`,
       OtherCriteria: `${OtherCriteria}`,
       UserID: `${await getUserId()}`,
-      isFvt: true
+      isFvt: true,
+      status: "Pending"
     });
     console.log("Document written with ID: ", docRef.id);
     // return docRef.id;
@@ -136,7 +137,15 @@ const toggleFvt = async (id, fvt) => {
   await updateDoc(FvtRef, {
     isFvt: fvt
   });
-  console.log("updated Successfully")
+  console.log("Wishlist Updated Successfully")
 }
 
-export {Registration, RoomPost, db, storage, RoomPreferred, Loggedin, ViewRooms, toggleFvt};
+const updateStatus = async(id, reqStatus) => {
+  const StatusRef = doc(db, "Rooms", id);
+  await updateDoc(StatusRef, {
+    status: reqStatus
+    });
+    console.log("Status Updated Successfully")
+}
+
+export {Registration, RoomPost, db, storage, RoomPreferred, Loggedin, ViewRooms, toggleFvt, updateStatus};

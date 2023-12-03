@@ -1,9 +1,10 @@
-import React from 'react'
-import {View, Text, TextInput} from 'react-native'
+import React, { useState } from 'react'
+import {View, Text, TextInput, Pressable} from 'react-native'
 import { Feather, Entypo } from '@expo/vector-icons';
 import styles from './ChatStyles'
 
 const ChatLayout = () => {
+  const [msg, setMsg] = useState("")
   return (
     <View style={[styles.Container, styles.Pt3]}>
       <View style={styles.Sender}>
@@ -21,9 +22,15 @@ const ChatLayout = () => {
         multiline
         placeholder="Write Your Message" 
         style={styles.MsgBox}
+        onChangeText={setMsg}
+        value={msg}
         />
         </View>
+        <Pressable onPress={() => {
+          setMsg("")
+        }}>
         <Feather name="send" size={20} color="#FFFFFF" style={[styles.SendBtn, styles.AlignSelfCenter]} />
+        </Pressable>
     </View>
 
     </View>
