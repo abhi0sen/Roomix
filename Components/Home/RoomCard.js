@@ -22,6 +22,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
         const userType = await AsyncStorage.getItem("userType");
         if (userType == "admin"){
           setEdit(true)
+        } else{
+          setEdit(false)
         }
     } catch (error) {
         console.error("Error retrieving user ID:", error);

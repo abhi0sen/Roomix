@@ -22,7 +22,7 @@ const RoomPreference = ({ navigation, route}) => {
   const {FlatSize, RoommateCount, TotalRent, AddressL1, selectedState, selectedCity, description, downloadURLs} = route.params;
 
   const PublishData = () =>{
-    RoomPost(FlatSize, RoommateCount, TotalRent, AddressL1, selectedState, selectedCity, description, downloadURLs, value, Gender, Meal, OtherCriteria)
+    RoomPost(FlatSize, RoommateCount, TotalRent, AddressL1, selectedState, selectedCity, description, downloadURLs, value, Gender, Meal, OtherCriteria, navigation)
   }
   // console.log(FlatSize, RoommateCount, TotalRent, AddressL1, selectedState, selectedCity, description, downloadURLs, value, Gender, Meal, OtherCriteria)
 
@@ -105,8 +105,8 @@ const RoomPreference = ({ navigation, route}) => {
           style={styles.Save}
           onPress={() => {
             PublishData()
-            alert("Your Request is Sent for Verification!!");
-            navigation.navigate("Home");
+            // alert("Your Request is Sent for Verification!!");
+            // navigation.navigate("Home");
             // RoomPreferred(Gender, Meal, value, OtherCriteria)
           }}
         >

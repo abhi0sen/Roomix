@@ -39,7 +39,7 @@ const getUserId = async () => {
   }
 };
 
-const Registration = async (username, password, mobile) => {
+const Registration = async (username, password, mobile, user, navigation) => {
 
 try {
     const docRef = await addDoc(collection(db, "users"), {
@@ -48,8 +48,9 @@ try {
       mobile: `${mobile}`,
       userType: `${user}`
     });
-    console.log("Document written with ID: ", docRef.id);
+    console.log("User Registered: ", docRef.id);
     setUserId(docRef.id)
+    navigation.navigate("isRoommate")
   } catch (e) {
     console.error("Error adding document: ", e);
   }
@@ -77,7 +78,7 @@ const querySnapshot = await getDocs(q);
   return false;
 }
 
-const RoomPost = async (FlatSize, RoommateCount, TotalRent, AddressL1, SelectedState, SelectedCity, Description, ImageUrls, ageGroup, Gender, Meal, OtherCriteria) => {
+const RoomPost = async (FlatSize, RoommateCount, TotalRent, AddressL1, SelectedState, SelectedCity, Description, ImageUrls, ageGroup, Gender, Meal, OtherCriteria, navigation) => {
   try {
     const docRef = await addDoc(collection(db, "Rooms"), {
       FlatSize: `${FlatSize}`,
@@ -97,6 +98,8 @@ const RoomPost = async (FlatSize, RoommateCount, TotalRent, AddressL1, SelectedS
       status: "Pending"
     });
     console.log("Document written with ID: ", docRef.id);
+    navigation.navigate("Home")
+
     // return docRef.id;
   } catch (e) {
     console.error("Error adding document: ", e);

@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "Roomix",
-    "slug": "Roomix",
+    "slug": "roomix",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -15,21 +15,23 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.senabhisar.roomix"
     },
     "android": {
       "permissions": [
-        "CAMERA_ROLL"
+        "android.permission.CAMERA_ROLL",
+        "android.permission.RECORD_AUDIO"
       ],
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.senabhisar.roomix"
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    
     "plugins": [
       [
         "expo-image-picker",
@@ -37,6 +39,18 @@
           "photosPermission": "The app accesses your photos to let you share them with your friends."
         }
       ]
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "ec2b04be-0e7e-46c5-9718-403f9577368a"
+      }
+    },
+    "owner": "senabhisar",
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/ec2b04be-0e7e-46c5-9718-403f9577368a"
+    }
   }
 }

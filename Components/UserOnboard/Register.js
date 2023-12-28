@@ -33,13 +33,12 @@ const Register = ({navigation}) => {
         Already a Roomix? <Text style={styles.Register}  onPress={() => {
                 navigation.navigate("Login")
             }}>Sign In</Text>
-      </Text>
+      </Text> 
       </View>
-
       <View>
             <Pressable style={styles.SignIn} onPress={() => {
-                // Registration(username, password, mobile)
-                navigation.navigate("isRoommate")
+                Registration(username, password, mobile, "user", navigation)
+                // navigation.navigate("isRoommate")
                 console.log(username, password, mobile)
             }} >
                 <Text style={styles.SignInText}>Register</Text>
